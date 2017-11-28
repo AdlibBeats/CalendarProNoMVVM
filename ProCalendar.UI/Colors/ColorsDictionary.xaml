@@ -1,0 +1,72 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="Static.TextBlock.Foreground" Color="Black"/>
+    <SolidColorBrush x:Key="Static.TextBlock.Disabled" Color="Black"/>
+    <SolidColorBrush x:Key="Static.Button.Background" Color="#FFF03C3C"/>
+    <SolidColorBrush x:Key="Static.Button.PointOver" Color="#FFC83232"/>
+    <SolidColorBrush x:Key="Static.Button.Pressed" Color="#FFA02828"/>
+    <SolidColorBrush x:Key="Static.Button.Disabled" Color="Gray"/>
+    <SolidColorBrush x:Key="Static.ListBoxItem.Normal" Color="#FF303030"/>
+    <SolidColorBrush x:Key="Static.ListBoxItem.PointOver" Color="#FF969696"/>
+    <SolidColorBrush x:Key="Static.ListBoxItem.Pressed" Color="#FF838383"/>
+    <SolidColorBrush x:Key="Static.ListBoxItem.Selected" Color="#FF838383"/>
+    <SolidColorBrush x:Key="Static.SplitView.CompactPane.Background" Color="LightGray"/>
+    <SolidColorBrush x:Key="Static.Grid.Background" Color="White"/>
+
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.Normal" Color="Black"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.PointerOver" Color="Black"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.Pressed" Color="Black"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.Blackouted" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.Disabled" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.Checked" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.CheckedPointerOver" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.CheckedPressed" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.CheckedBlackouted" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.CheckedDisabled" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.Indeterminate" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.IndeterminatePointerOver" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.IndeterminatePressed" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.IndeterminateBlackouted" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Foreground.IndeterminateDisabled" Color="#CCCCCC"/>
+
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IsWeekendNormal" Color="#E6E6E6"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IsWeekendPointerOver" Color="#E6E6E6"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IsWeekendPressed" Color="#E6E6E6"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IsWeekendBlackouted" Color="#E6E6E6"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IsWeekendDisabled" Color="White"/>
+
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.Normal" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.PointerOver" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.Pressed" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.Blackouted" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.Disabled" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.Checked" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.CheckedPointerOver" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.CheckedPressed" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.CheckedBlackouted" Color="#FFA44040"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.CheckedDisabled" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.Indeterminate" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IndeterminatePointerOver" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IndeterminatePressed" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IndeterminateBlackouted" Color="#FFA44040"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.Background.IndeterminateDisabled" Color="#CCCCCC"/>
+
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.Normal" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.PointerOver" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.Pressed" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.Blackouted" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.Disabled" Color="White"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.Checked" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.CheckedPointerOver" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.CheckedPressed" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.CheckedBlackouted" Color="#FFA44040"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.CheckedDisabled" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.Indeterminate" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.IndeterminatePointerOver" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.IndeterminatePressed" Color="Red"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.IndeterminateBlackouted" Color="#FFA44040"/>
+    <SolidColorBrush x:Key="Static.DateTimeToggleButton.BorderBrush.IndeterminateDisabled" Color="#CCCCCC"/>
+
+</ResourceDictionary>
