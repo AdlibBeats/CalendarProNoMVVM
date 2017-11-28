@@ -133,7 +133,7 @@ namespace ProCalendar.UI.Controls
             //void OnSelected(object sender, RoutedEventArgs e) =>
             //    SelectionChanged?.Invoke(sender, null);
 
-            return proCalendarToggleButton;
+            return null;
         }
 
         public Grid ItemsPanelRoot
