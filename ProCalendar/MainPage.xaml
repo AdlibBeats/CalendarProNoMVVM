@@ -9,6 +9,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+        <!--<local:AdaptiveGridView
+            x:Name="lol"
+            RowsCount="6" ColumnsCount="7"
+            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
+
+        <local:ProCalendarView/>
     </Grid>
 </Page>

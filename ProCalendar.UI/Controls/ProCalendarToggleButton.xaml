@@ -53,7 +53,8 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 FontSize="{TemplateBinding FontSize}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                >
                                 <ContentPresenter.Content>
                                     <TextBlock
                                         x:Name="RootText"
@@ -61,7 +62,7 @@
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         Foreground="Black"
-                                        Text="{Binding DateTime.Day, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                 </ContentPresenter.Content>
                             </ContentPresenter>
                             <Border

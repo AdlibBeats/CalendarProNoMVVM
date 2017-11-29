@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Input;
 
 namespace ProCalendar.UI.Controls
 {
-    public class ProCalendarToggleButton : Control
+    public class ProCalendarToggleButton : ContentControl
     {
         #region Public Events
 
@@ -45,14 +45,14 @@ namespace ProCalendar.UI.Controls
             base.OnApplyTemplate();
             
             if (this.IsDisabled)
-                UpdateIsDisable(this.IsDisabled);
+                UpdateIsDisable();
             else if (this.IsBlackout)
-                UpdateIsBlackout(this.IsBlackout);
+                UpdateIsBlackout();
             else
-                UpdateIsSelected(this.IsSelected);
+                UpdateIsSelected();
 
-            UpdateIsToday(this.IsToday);
-            UpdateIsWeekend(this.IsWeekend);
+            UpdateIsToday();
+            UpdateIsWeekend();
         }
 
         #endregion
@@ -99,35 +99,40 @@ namespace ProCalendar.UI.Controls
 
         #region Private Updating Methods
 
-        private void UpdateIsSelected(bool value)
+        private void UpdateIsSelected()
         {
             this.IsEnabled = true;
 
-            VisualStateManager.GoToState(this, value ? "CheckedNormal" : "Normal", true);
+            VisualStateManager.GoToState(this, this.IsSelected ? "CheckedNormal" : "Normal", true);
         }
 
-        private void UpdateIsBlackout(bool value)
+        private void UpdateIsBlackout()
         {
-            this.IsEnabled = !value;
+            this.IsEnabled = !this.IsBlackout;
 
             VisualStateManager.GoToState(this, this.IsSelected ? "CheckedBlackouted" : "Blackouted", true);
         }
 
-        private void UpdateIsDisable(bool value)
+        private void UpdateIsDisable()
         {
-            this.IsEnabled = !value;
+            this.IsEnabled = !this.IsDisabled;
 
             VisualStateManager.GoToState(this, this.IsSelected ? "CheckedDisabled" : "Disabled", true);
         }
 
-        private void UpdateIsWeekend(bool value)
+        private void UpdateIsWeekend()
         {
-            VisualStateManager.GoToState(this, value ? "IsWeekendTrue" : "IsWeekendFalse", true);
+            VisualStateManager.GoToState(this, this.IsWeekend ? "IsWeekendTrue" : "IsWeekendFalse", true);
         }
 
-        private void UpdateIsToday(bool value)
+        private void UpdateIsToday()
         {
-            VisualStateManager.GoToState(this, value ? "IsToodayTrue" : "IsToodayFalse", true);
+            VisualStateManager.GoToState(this, this.IsToday ? "IsToodayTrue" : "IsToodayFalse", true);
+        }
+
+        private void UpdateDateTime()
+        {
+            this.Content = this.DateTime.ToString("dd");
         }
 
         #endregion
@@ -148,7 +153,7 @@ namespace ProCalendar.UI.Controls
             var proCalendarToggleButton = d as ProCalendarToggleButton;
             if (proCalendarToggleButton == null) return;
 
-            proCalendarToggleButton.UpdateIsSelected((bool)e.NewValue);
+            proCalendarToggleButton.UpdateIsSelected();
         }
 
         public bool IsBlackout
@@ -165,7 +170,7 @@ namespace ProCalendar.UI.Controls
             var proCalendarToggleButton = d as ProCalendarToggleButton;
             if (proCalendarToggleButton == null) return;
 
-            proCalendarToggleButton.UpdateIsBlackout((bool)e.NewValue);
+            proCalendarToggleButton.UpdateIsBlackout();
         }
 
         public bool IsDisabled
@@ -182,7 +187,7 @@ namespace ProCalendar.UI.Controls
             var proCalendarToggleButton = d as ProCalendarToggleButton;
             if (proCalendarToggleButton == null) return;
 
-            proCalendarToggleButton.UpdateIsDisable((bool)e.NewValue);
+            proCalendarToggleButton.UpdateIsDisable();
         }
 
         public bool IsWeekend
@@ -199,7 +204,7 @@ namespace ProCalendar.UI.Controls
             var proCalendarToggleButton = d as ProCalendarToggleButton;
             if (proCalendarToggleButton == null) return;
 
-            proCalendarToggleButton.UpdateIsWeekend((bool)e.NewValue);
+            proCalendarToggleButton.UpdateIsWeekend();
         }
 
         public bool IsToday
@@ -216,7 +221,7 @@ namespace ProCalendar.UI.Controls
             var proCalendarToggleButton = d as ProCalendarToggleButton;
             if (proCalendarToggleButton == null) return;
 
-            proCalendarToggleButton.UpdateIsToday((bool)e.NewValue);
+            proCalendarToggleButton.UpdateIsToday();
         }
 
         public DateTime DateTime
@@ -226,7 +231,15 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty DateTimeProperty =
-            DependencyProperty.Register("DateTime", typeof(DateTime), typeof(ProCalendarToggleButton), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("DateTime", typeof(DateTime), typeof(ProCalendarToggleButton), new PropertyMetadata(DateTime.Now, lol));
+
+        private static void lol(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var proCalendarToggleButton = d as ProCalendarToggleButton;
+            if (proCalendarToggleButton == null) return;
+
+            proCalendarToggleButton.UpdateDateTime();
+        }
 
         #endregion
     }

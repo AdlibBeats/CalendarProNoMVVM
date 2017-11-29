@@ -108,13 +108,10 @@
   <ItemGroup>
     <Compile Include="Controls\AdaptiveGridView.cs" />
     <Compile Include="Controls\ProCalendarToggleButton.cs" />
+    <Compile Include="Controls\ProCalendarView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueConverters\DateTimeConverter.cs" />
     <EmbeddedResource Include="Properties\ProCalendar.UI.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.1</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Colors\ColorsDictionary.xaml">
@@ -131,9 +128,28 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Controls\ProCalendarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\ButtonDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FlipViewDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Styles\" />
+    <Content Include="Assets\icon_calendar.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

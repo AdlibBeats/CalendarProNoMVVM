@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,11 +11,17 @@ using Windows.UI.Xaml.Media;
 
 namespace ProCalendar.UI.Controls
 {
-    public class AdaptiveGridView : Control
+    public class AdaptiveGridView : Control, IEnumerable<FrameworkElement>
     {
+        public event RoutedEventHandler SelectionChanged;
+
+        private int _currentColumn = 0;
+        private int _currentRow = 0;
+        
         public AdaptiveGridView()
         {
             this.DefaultStyleKey = typeof(AdaptiveGridView);
+            
         }
 
         protected override void OnApplyTemplate()
@@ -21,119 +30,78 @@ namespace ProCalendar.UI.Controls
 
             this.ItemsPanelRoot = this.GetTemplateChild("ItemsPanelRoot") as Grid;
 
-            UpdateItemsPanelRootColumns(this.ColumnsCount);
-            UpdateItemsPanelRootRows(this.RowsCount);
+            UpdateColumnsCount();
+            UpdateRowsCount();
+            UpdateItems();
+            UpdateItemWidth();
+            UpdateItemHeigh();
         }
 
-        private void UpdateItemsPanelRootColumns(int value)
+        private void UpdateColumnsCount()
         {
             if (this.ItemsPanelRoot == null) return;
 
             this.ItemsPanelRoot.ColumnDefinitions.Clear();
 
-            for (int column = 0; column < value; column++)
+            for (int column = 0; column < this.ColumnsCount; column++)
                 this.ItemsPanelRoot.ColumnDefinitions.Add(new ColumnDefinition
                     { Width = new GridLength(0, GridUnitType.Auto) });
         }
 
-        private void UpdateItemsPanelRootRows(int value)
+        private void UpdateRowsCount()
         {
             if (this.ItemsPanelRoot == null) return;
 
             this.ItemsPanelRoot.RowDefinitions.Clear();
 
-            for (int row = 0; row < value; row++)
+            for (int row = 0; row < this.RowsCount; row++)
                 this.ItemsPanelRoot.RowDefinitions.Add(new RowDefinition
                     { Height = new GridLength(0, GridUnitType.Auto) });
         }
 
-        private void UpdateItemsSource(object value)
+        private void UpdateItems()
         {
-            if (this.ItemsPanelRoot == null) return;
+            if (this.Items == null || !this.Items.Any()) return;
+            if (this.ItemsPanelRoot?.Children != null)
+                this.ItemsPanelRoot.Children.Clear();
 
-            var itemsSource = value as IEnumerable<object>;
-            if (itemsSource == null) return;
-
-            int column = 0;
-            int row = 0;
-
-            int contentCount = this.RowsCount * this.ColumnsCount;
-
-            int count = itemsSource.Count() < contentCount ? itemsSource.Count() : contentCount;
-
-            for (int i = 0; i < count; i++)
+            foreach (var item in this.Items)
             {
-                var dataContext = itemsSource.ElementAtOrDefault(i);
-                if (dataContext == null) continue;
-
-                var itemTemplate = new Button();
-                if (itemTemplate == null) return;
-
-                Grid.SetColumn(itemTemplate, column);
-                Grid.SetRow(itemTemplate, row);
-
-                this.ItemsPanelRoot.Children.Add(itemTemplate);
-                //this.ItemsPanelRoot.UpdateLayout();
-
-                column++;
-                if (column != this.ColumnsCount)
-                    continue;
-
-                column = 0;
-                row++;
-                if (row != this.RowsCount)
-                    continue;
+                Add(item);
             }
         }
 
-        private FrameworkElement GetItemTemplate(object dataContext)
+        private void UpdateItemWidth()
         {
-            if (this.ItemTemplate == null) return null;
+            if (this.ItemsPanelRoot?.Children == null) return;
 
-            var frameworkElement = this.ItemTemplate.LoadContent() as FrameworkElement;
-            if (frameworkElement == null) return null;
+            foreach (FrameworkElement child in this.ItemsPanelRoot.Children)
+                child.Width = this.ItemWidth;
+        }
 
-            frameworkElement.Width = this.ItemWidth;
-            frameworkElement.Height = this.ItemHeight;
-            frameworkElement.HorizontalAlignment = this.ItemHorizontalAlignment;
-            frameworkElement.VerticalAlignment = this.ItemVerticalAlignment;
-            frameworkElement.Margin = this.ItemMargin;
-            //frameworkElement.DataContext = dataContext;
+        private void UpdateItemHeigh()
+        {
+            if (this.ItemsPanelRoot?.Children == null) return;
 
-            var control = frameworkElement as Control;
-            if (control == null) return frameworkElement;
+            foreach (FrameworkElement child in this.ItemsPanelRoot.Children)
+                child.Height = this.ItemHeight;
+        }
 
-            control.BorderBrush = this.ItemBorderBrush;
-            control.BorderThickness = this.ItemBorderThickness;
-            control.Foreground = this.ItemForeground;
-            control.Background = this.ItemBackground;
-            control.Padding = this.ItemPadding;
+        public List<ProCalendarToggleButton> Items
+        {
+            get { return (List<ProCalendarToggleButton>)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
+        }
 
-            //var dateTimeModel = dataContext as DateTimeModel;
-            //if (dateTimeModel == null) return control;
+        public static readonly DependencyProperty ItemsProperty =
+            DependencyProperty.Register("Items", typeof(List<ProCalendarToggleButton>), typeof(AdaptiveGridView), new PropertyMetadata(null, OnItemsChanged));
 
-            //var contentControl = control as ContentControl;
-            //if (contentControl == null) return control;
+        private static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var adaptiveGridView = d as AdaptiveGridView;
+            if (adaptiveGridView == null) return;
 
-            //contentControl.Content = dateTimeModel.DateTime.ToString("ddd");
-
-            //var proCalendarToggleButton = contentControl as ProCalendarToggleButton;
-            //if (proCalendarToggleButton == null) return contentControl;
-
-            //proCalendarToggleButton.IsSelected = dateTimeModel.IsSelected;
-            //proCalendarToggleButton.IsBlackout = dateTimeModel.IsBlackout;
-            //proCalendarToggleButton.IsDisabled = dateTimeModel.IsDisabled;
-            //proCalendarToggleButton.IsWeekend = dateTimeModel.IsWeekend;
-            //proCalendarToggleButton.IsToday = dateTimeModel.IsToday;
-            //proCalendarToggleButton.DateTime = dateTimeModel.DateTime;
-
-            //proCalendarToggleButton.Selected -= OnSelected;
-            //proCalendarToggleButton.Selected += OnSelected;
-
-            //void OnSelected(object sender, RoutedEventArgs e) =>
-            //    SelectionChanged?.Invoke(sender, null);
-
-            return null;
+            adaptiveGridView.UpdateItems();
         }
 
         public Grid ItemsPanelRoot
@@ -144,32 +112,6 @@ namespace ProCalendar.UI.Controls
 
         public static readonly DependencyProperty ItemsPanelRootProperty =
             DependencyProperty.Register("ItemsPanelRoot", typeof(Grid), typeof(AdaptiveGridView), new PropertyMetadata(null));
-
-        public DataTemplate ItemTemplate
-        {
-            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemTemplateProperty =
-            DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(AdaptiveGridView), new PropertyMetadata(null));
-
-        public object ItemsSource
-        {
-            get { return GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.RegisterAttached("ItemsSource", typeof(object), typeof(AdaptiveGridView), new PropertyMetadata(null, OnItemsSourceChanged));
-
-        private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var adaptiveGridView = d as AdaptiveGridView;
-            if (adaptiveGridView == null) return;
-
-            adaptiveGridView.UpdateItemsSource(e.NewValue);
-        }
 
         public int RowsCount
         {
@@ -185,7 +127,7 @@ namespace ProCalendar.UI.Controls
             var adaptiveGridView = d as AdaptiveGridView;
             if (adaptiveGridView == null) return;
 
-            adaptiveGridView.UpdateItemsPanelRootRows((int)e.NewValue);
+            adaptiveGridView.UpdateRowsCount();
         }
 
         public int ColumnsCount
@@ -202,46 +144,8 @@ namespace ProCalendar.UI.Controls
             var adaptiveGridView = d as AdaptiveGridView;
             if (adaptiveGridView == null) return;
 
-            adaptiveGridView.UpdateItemsPanelRootColumns((int)e.NewValue);
+            adaptiveGridView.UpdateColumnsCount();
         }
-
-        #region Item Properties
-
-        public Brush ItemBorderBrush
-        {
-            get { return (Brush)GetValue(ItemBorderBrushProperty); }
-            set { SetValue(ItemBorderBrushProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemBorderBrushProperty =
-            DependencyProperty.Register("ItemBorderBrush", typeof(Brush), typeof(AdaptiveGridView), new PropertyMetadata(new SolidColorBrush(Colors.Gray)));
-
-        public Thickness ItemBorderThickness
-        {
-            get { return (Thickness)GetValue(ItemBorderThicknessProperty); }
-            set { SetValue(ItemBorderThicknessProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemBorderThicknessProperty =
-            DependencyProperty.Register("ItemBorderThickness", typeof(Thickness), typeof(AdaptiveGridView), new PropertyMetadata(new Thickness(0, 0, 0.5, 0.5)));
-
-        public Brush ItemForeground
-        {
-            get { return (Brush)GetValue(ItemForegroundProperty); }
-            set { SetValue(ItemForegroundProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemForegroundProperty =
-            DependencyProperty.RegisterAttached("ItemForeground", typeof(Brush), typeof(AdaptiveGridView), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
-
-        public Brush ItemBackground
-        {
-            get { return (Brush)GetValue(ItemBackgroundProperty); }
-            set { SetValue(ItemBackgroundProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemBackgroundProperty =
-            DependencyProperty.RegisterAttached("ItemBackground", typeof(Brush), typeof(AdaptiveGridView), new PropertyMetadata(new SolidColorBrush(Colors.White)));
 
         public double ItemWidth
         {
@@ -250,7 +154,15 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty ItemWidthProperty =
-            DependencyProperty.RegisterAttached("ItemWidth", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(36));
+            DependencyProperty.RegisterAttached("ItemWidth", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0, OnItemWidthChanged));
+
+        private static void OnItemWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var adaptiveGridView = d as AdaptiveGridView;
+            if (adaptiveGridView == null) return;
+
+            adaptiveGridView.UpdateItemWidth();
+        }
 
         public double ItemHeight
         {
@@ -259,44 +171,137 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty ItemHeightProperty =
-            DependencyProperty.RegisterAttached("ItemHeight", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(36));
+            DependencyProperty.RegisterAttached("ItemHeight", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0, OnItemHeightChanged));
 
-        public HorizontalAlignment ItemHorizontalAlignment
+        private static void OnItemHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            get { return (HorizontalAlignment)GetValue(ItemHorizontalAlignmentProperty); }
-            set { SetValue(ItemHorizontalAlignmentProperty, value); }
+            var adaptiveGridView = d as AdaptiveGridView;
+            if (adaptiveGridView == null) return;
+
+            adaptiveGridView.UpdateItemHeigh();
         }
 
-        public static readonly DependencyProperty ItemHorizontalAlignmentProperty =
-            DependencyProperty.Register("ItemHorizontalAlignment", typeof(HorizontalAlignment), typeof(AdaptiveGridView), new PropertyMetadata(1));
-
-        public VerticalAlignment ItemVerticalAlignment
+        public IEnumerator<FrameworkElement> GetEnumerator()
         {
-            get { return (VerticalAlignment)GetValue(ItemVerticalAlignmentProperty); }
-            set { SetValue(ItemVerticalAlignmentProperty, value); }
+            if (this.ItemsPanelRoot?.Children == null) yield return null;
+
+            foreach (FrameworkElement child in this.ItemsPanelRoot.Children)
+                yield return child;
         }
 
-        public static readonly DependencyProperty ItemVerticalAlignmentProperty =
-            DependencyProperty.Register("ItemVerticalAlignment", typeof(VerticalAlignment), typeof(AdaptiveGridView), new PropertyMetadata(1));
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        public Thickness ItemMargin
+        public int Count
         {
-            get { return (Thickness)GetValue(ItemMarginProperty); }
-            set { SetValue(ItemMarginProperty, value); }
+            get
+            {
+                if (this.ItemsPanelRoot?.Children == null)
+                    return -1;
+                else
+                    return this.ItemsPanelRoot.Children.Count;
+            }
         }
 
-        public static readonly DependencyProperty ItemMarginProperty =
-            DependencyProperty.RegisterAttached("ItemMargin", typeof(Thickness), typeof(AdaptiveGridView), new PropertyMetadata(new Thickness(0)));
-
-        public Thickness ItemPadding
+        public bool IsReadOnly
         {
-            get { return (Thickness)GetValue(ItemPaddingProperty); }
-            set { SetValue(ItemPaddingProperty, value); }
+            get
+            {
+                if (this.ItemsPanelRoot?.Children == null)
+                    return false;
+                else
+                    return this.ItemsPanelRoot.Children.IsReadOnly;
+            }
         }
 
-        public static readonly DependencyProperty ItemPaddingProperty =
-            DependencyProperty.RegisterAttached("ItemPadding", typeof(Thickness), typeof(AdaptiveGridView), new PropertyMetadata(new Thickness(0)));
+        public FrameworkElement this[int index]
+        {
+            get => this.ItemsPanelRoot?.Children?.ElementAtOrDefault(index) as FrameworkElement;
+            set
+            {
+                var frameworkElement =
+                    this.ItemsPanelRoot?.Children?.ElementAtOrDefault(index) as FrameworkElement;
 
-        #endregion
+                frameworkElement = value;
+            }
+        }
+
+        public int IndexOf(FrameworkElement item)
+        {
+            if (item == null) return -1;
+            if (this.ItemsPanelRoot?.Children == null) return -1;
+
+            return this.ItemsPanelRoot.Children.IndexOf(item);
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (this.ItemsPanelRoot?.Children == null) return;
+
+            this.ItemsPanelRoot.Children.RemoveAt(index);
+        }
+
+        public void Add(FrameworkElement item)
+        {
+            if (_currentRow == this.RowsCount)
+                return;
+
+            if (item == null) return;
+            if (this.ItemsPanelRoot?.Children == null) return;
+
+            item.Width = this.ItemWidth;
+            item.Height = this.ItemHeight;
+
+            var proCalendarToggleButton = item as ProCalendarToggleButton;
+            if (proCalendarToggleButton != null)
+            {
+                proCalendarToggleButton.Selected -= OnSelected;
+                proCalendarToggleButton.Selected += OnSelected;
+
+                void OnSelected(object sender, RoutedEventArgs e) =>
+                    SelectionChanged?.Invoke(sender, null);
+            }
+
+            Grid.SetColumn(item, _currentColumn);
+            Grid.SetRow(item, _currentRow);
+
+            _currentColumn++;
+            if (_currentColumn == this.ColumnsCount)
+            {
+                _currentColumn = 0;
+                _currentRow++;
+            }
+
+            this.ItemsPanelRoot.Children.Add(item);
+        }
+
+        public void Clear()
+        {
+            if (this.ItemsPanelRoot?.Children == null) return;
+
+            this.ItemsPanelRoot.Children.Clear();
+        }
+
+        public bool Contains(FrameworkElement item)
+        {
+            if (item == null) return false;
+            if (this.ItemsPanelRoot?.Children == null) return false;
+
+            return this.ItemsPanelRoot.Children.Contains(item);
+        }
+
+        public void CopyTo(FrameworkElement[] array, int arrayIndex)
+        {
+            if (this.ItemsPanelRoot?.Children == null) return;
+
+            this.ItemsPanelRoot.Children.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(FrameworkElement item)
+        {
+            if (item == null) return false;
+            if (this.ItemsPanelRoot?.Children == null) return false;
+
+            return this.ItemsPanelRoot.Children.Remove(item);
+        }
     }
 }

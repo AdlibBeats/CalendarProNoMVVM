@@ -8,13 +8,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Colors/ColorsDictionary.xaml"/>
-                <!--<ResourceDictionary Source="ms-appx:///ProCalendar.UI/Styles/ButtonDictionary.xaml"/>
-                <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Styles/FlipViewDictionary.xaml"/>-->
+                <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Styles/ButtonDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Styles/FlipViewDictionary.xaml"/>
 
                 <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Controls/ProCalendarToggleButton.xaml"/>
-                <!--<ResourceDictionary Source="ms-appx:///ProCalendar.UI/Controls/AdaptiveGridView.xaml"/>
+                <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Controls/AdaptiveGridView.xaml"/>
                 <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Controls/ProCalendarView.xaml"/>
-                <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Controls/ProCalendarPicker.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
