@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Input;
 
 namespace ProCalendar.UI.Controls
 {
-    public sealed class ProCalendarToggleButton : ContentControl
+    public class ProCalendarToggleButton : ContentControl
     {
         #region Public Events
 
