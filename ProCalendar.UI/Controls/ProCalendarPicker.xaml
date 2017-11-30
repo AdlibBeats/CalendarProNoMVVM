@@ -1,0 +1,93 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProCalendar.UI.Controls">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/ProCalendar.UI/Styles/ButtonDictionary.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="local:ProCalendarPicker">
+        <Style.Setters>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="252.5"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="local:ProCalendarPicker">
+                        <Grid
+                            x:Name="Root"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}">
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout Placement="Bottom" x:Name="RootFlyout">
+                                    <Flyout.FlyoutPresenterStyle>
+                                        <Style TargetType="FlyoutPresenter">
+                                            <Setter Property="Margin" Value="0,-5,0,5"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="FlyoutPresenter">
+                                                        <ContentPresenter BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Flyout.FlyoutPresenterStyle>
+                                    <local:ProCalendarView x:Name="ProCalendarView" />
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Button
+                                x:Name="LoadingButton"
+                                Style="{StaticResource CalendarDatePickerButton}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Image
+                                            x:Name="CalendarIcon"
+                                            Stretch="Uniform"
+                                            Source="/ProCalendar.UI/Assets/icon_calendar.png"
+                                            Width="20" Height="20"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            Margin="5,0"/>
+                                        <ProgressRing
+                                            x:Name="LoadingProgress"
+                                            IsActive="False"
+                                            Width="20" Height="20"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            Margin="5,0"
+                                            Foreground="Black"/>
+                                        <TextBlock
+                                            x:Name="DateText"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            Margin="5,0"
+                                            Text="Select Date">
+                                        </TextBlock>
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <Grid
+                                x:Name="FlyoutBorder"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch">
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

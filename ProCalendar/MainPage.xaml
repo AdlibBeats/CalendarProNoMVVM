@@ -8,12 +8,12 @@
     xmlns:s="using:System"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="LightGreen">
         <!--<local:AdaptiveGridView
             x:Name="lol"
             RowsCount="6" ColumnsCount="7"
             VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
 
-        <local:ProCalendarView/>
+        <local:ProCalendarPicker/>
     </Grid>
 </Page>

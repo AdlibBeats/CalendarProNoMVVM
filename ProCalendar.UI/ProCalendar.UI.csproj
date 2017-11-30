@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Controls\AdaptiveGridView.cs" />
     <Compile Include="Controls\ControlsExtensions\ContentControlsExtension.cs" />
+    <Compile Include="Controls\ProCalendarPicker.cs" />
     <Compile Include="Controls\ProCalendarToggleButton.cs" />
     <Compile Include="Controls\ProCalendarView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +121,11 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\AdaptiveGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\ProCalendarPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

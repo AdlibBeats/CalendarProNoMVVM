@@ -4,7 +4,7 @@
     xmlns:local="using:ProCalendar.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Colors/ColorsDictionary.xaml"/>
+        <ResourceDictionary Source="/ProCalendar.UI/Colors/ColorsDictionary.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="local:ProCalendarToggleButton">
