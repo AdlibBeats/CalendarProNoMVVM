@@ -298,9 +298,6 @@ namespace ProCalendar.UI.Controls
             {
                 var adaptiveGridView = new AdaptiveGridView
                 {
-                    Width = 252,
-                    ItemWidth = 36,
-                    ItemHeight = 36,
                     RowsCount = 6,
                     ColumnsCount = 7,
                     HorizontalAlignment = HorizontalAlignment.Stretch,

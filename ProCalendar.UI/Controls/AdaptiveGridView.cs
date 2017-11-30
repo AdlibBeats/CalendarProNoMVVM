@@ -21,6 +21,8 @@ namespace ProCalendar.UI.Controls
         public AdaptiveGridView()
         {
             this.DefaultStyleKey = typeof(AdaptiveGridView);
+
+            this.Width = 252;
         }
 
         protected override void OnApplyTemplate()
@@ -151,7 +153,7 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty ItemWidthProperty =
-            DependencyProperty.RegisterAttached("ItemWidth", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0d, OnItemWidthChanged));
+            DependencyProperty.RegisterAttached("ItemWidth", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(36d, OnItemWidthChanged));
 
         private static void OnItemWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -168,7 +170,7 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty ItemHeightProperty =
-            DependencyProperty.RegisterAttached("ItemHeight", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0d, OnItemHeightChanged));
+            DependencyProperty.RegisterAttached("ItemHeight", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(36d, OnItemHeightChanged));
 
         private static void OnItemHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
