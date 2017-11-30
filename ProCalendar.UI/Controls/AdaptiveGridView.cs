@@ -188,6 +188,43 @@ namespace ProCalendar.UI.Controls
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
+        public void Add(FrameworkElement item)
+        {
+            if (_currentRow == this.RowsCount)
+                return;
+
+            if (item == null) return;
+            if (this.ItemsPanelRoot?.Children == null) return;
+
+            item.Width = this.ItemWidth;
+            item.Height = this.ItemHeight;
+
+            var proCalendarToggleButton = item as ProCalendarToggleButton;
+            if (proCalendarToggleButton != null)
+            {
+                proCalendarToggleButton.Selected -= OnSelected;
+                proCalendarToggleButton.Selected += OnSelected;
+
+                proCalendarToggleButton.Unselected -= OnSelected;
+                proCalendarToggleButton.Unselected += OnSelected;
+
+                void OnSelected(object sender, RoutedEventArgs e) =>
+                    SelectionChanged?.Invoke(sender, null);
+            }
+
+            Grid.SetColumn(item, _currentColumn);
+            Grid.SetRow(item, _currentRow);
+
+            _currentColumn++;
+            if (_currentColumn == this.ColumnsCount)
+            {
+                _currentColumn = 0;
+                _currentRow++;
+            }
+
+            this.ItemsPanelRoot.Children.Add(item);
+        }
+
         public int Count
         {
             get
@@ -235,43 +272,6 @@ namespace ProCalendar.UI.Controls
             if (this.ItemsPanelRoot?.Children == null) return;
 
             this.ItemsPanelRoot.Children.RemoveAt(index);
-        }
-
-        public void Add(FrameworkElement item)
-        {
-            if (_currentRow == this.RowsCount)
-                return;
-
-            if (item == null) return;
-            if (this.ItemsPanelRoot?.Children == null) return;
-
-            item.Width = this.ItemWidth;
-            item.Height = this.ItemHeight;
-
-            var proCalendarToggleButton = item as ProCalendarToggleButton;
-            if (proCalendarToggleButton != null)
-            {
-                proCalendarToggleButton.Selected -= OnSelected;
-                proCalendarToggleButton.Selected += OnSelected;
-
-                proCalendarToggleButton.Unselected -= OnSelected;
-                proCalendarToggleButton.Unselected += OnSelected;
-
-                void OnSelected(object sender, RoutedEventArgs e) =>
-                    SelectionChanged?.Invoke(sender, null);
-            }
-
-            Grid.SetColumn(item, _currentColumn);
-            Grid.SetRow(item, _currentRow);
-
-            _currentColumn++;
-            if (_currentColumn == this.ColumnsCount)
-            {
-                _currentColumn = 0;
-                _currentRow++;
-            }
-
-            this.ItemsPanelRoot.Children.Add(item);
         }
 
         public void Clear()
