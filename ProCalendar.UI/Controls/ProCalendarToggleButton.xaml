@@ -11,7 +11,7 @@
         <Style.Setters>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -53,8 +53,7 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 FontSize="{TemplateBinding FontSize}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                >
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                                 <ContentPresenter.Content>
                                     <TextBlock
                                         x:Name="RootText"
@@ -62,6 +61,7 @@
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         Foreground="Black"
+                                        FontSize="{TemplateBinding FontSize}"
                                         Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                 </ContentPresenter.Content>
                             </ContentPresenter>

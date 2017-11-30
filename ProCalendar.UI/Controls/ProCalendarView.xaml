@@ -5,17 +5,16 @@
     xmlns:converters="using:ProCalendar.UI.ValueConverters">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Colors/ColorsDictionary.xaml"/>
-        <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Styles/ButtonDictionary.xaml"/>
-        <ResourceDictionary Source="ms-appx:///ProCalendar.UI/Styles/FlipViewDictionary.xaml"/>
+        <ResourceDictionary Source="/ProCalendar.UI/Colors/ColorsDictionary.xaml"/>
+        <ResourceDictionary Source="/ProCalendar.UI/Styles/ButtonDictionary.xaml"/>
+        <ResourceDictionary Source="/ProCalendar.UI/Styles/FlipViewDictionary.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
-    <converters:DateTimeToDay x:Key="Static.Converters.DateTimeToDayConverter"/>
+    
     <converters:DateTimeToMonth x:Key="Static.Converters.DateTimeToMonthConverter"/>
 
     <Style TargetType="controls:ProCalendarView">
-        <Setter Property="Width" Value="265"/>
-        <Setter Property="Height" Value="290"/>
+        <Setter Property="Width" Value="253"/>
+        <Setter Property="Height" Value="285"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Foreground" Value="Black"/>
@@ -54,7 +53,7 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left"
                                     TextAlignment="Center"
-                                    Text="{Binding ElementName=ContentFlipView, Mode=OneWay, Path=SelectedItem.Items[10].DateTime, Converter={StaticResource Static.Converters.DateTimeToMonthConverter}}"/>
+                                    Text="{Binding ElementName=ContentFlipView, Mode=OneWay, Path=SelectedItem.Items[7].DateTime, Converter={StaticResource Static.Converters.DateTimeToMonthConverter}}"/>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                                     <Button x:Name="PreviousButtonVertical" Style="{StaticResource GlyphButton}" Content="&#xE014;"/>
                                     <Button x:Name="NextButtonVertical" Style="{StaticResource GlyphButton}" Content="&#xE015;"/>
@@ -62,20 +61,22 @@
                             </Grid>
                             <controls:AdaptiveGridView
                                 x:Name="DaysOfWeekContent"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ItemWidth="36"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
                                 ItemHeight="36"
+                                ItemWidth="36"
+                                Width="252"
                                 Margin="0"
                                 Grid.Row="1"
                                 ColumnsCount="7"
                                 RowsCount="1">
                             </controls:AdaptiveGridView>
                             <FlipView
-                                x:Name="ContentFlipView" Height="220"
+                                x:Name="ContentFlipView"
+                                Height="216"
                                 Grid.Row="2"
                                 BorderBrush="Gray"
-                                BorderThickness="0.5,0.5,0.5,0.5"
+                                BorderThickness="0, 0.5, 0, 0"
                                 Style="{StaticResource CalendarFlipView}">
                                 <FlipView.ItemsPanel>
                                     <ItemsPanelTemplate>

@@ -21,7 +21,6 @@ namespace ProCalendar.UI.Controls
         public AdaptiveGridView()
         {
             this.DefaultStyleKey = typeof(AdaptiveGridView);
-            
         }
 
         protected override void OnApplyTemplate()
@@ -61,14 +60,12 @@ namespace ProCalendar.UI.Controls
 
         private void UpdateItems()
         {
-            if (this.Items == null || !this.Items.Any()) return;
+            if (this.Items == null) return;
             if (this.ItemsPanelRoot?.Children != null)
                 this.ItemsPanelRoot.Children.Clear();
 
             foreach (var item in this.Items)
-            {
                 Add(item);
-            }
         }
 
         private void UpdateItemWidth()
@@ -87,14 +84,14 @@ namespace ProCalendar.UI.Controls
                 child.Height = this.ItemHeight;
         }
 
-        public List<ProCalendarToggleButton> Items
+        public IEnumerable<FrameworkElement> Items
         {
-            get { return (List<ProCalendarToggleButton>)GetValue(ItemsProperty); }
+            get { return (IEnumerable<FrameworkElement>)GetValue(ItemsProperty); }
             set { SetValue(ItemsProperty, value); }
         }
 
         public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register("Items", typeof(List<ProCalendarToggleButton>), typeof(AdaptiveGridView), new PropertyMetadata(null, OnItemsChanged));
+            DependencyProperty.Register("Items", typeof(IEnumerable<FrameworkElement>), typeof(AdaptiveGridView), new PropertyMetadata(null, OnItemsChanged));
 
         private static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -154,7 +151,7 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty ItemWidthProperty =
-            DependencyProperty.RegisterAttached("ItemWidth", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0, OnItemWidthChanged));
+            DependencyProperty.RegisterAttached("ItemWidth", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0d, OnItemWidthChanged));
 
         private static void OnItemWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -171,7 +168,7 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty ItemHeightProperty =
-            DependencyProperty.RegisterAttached("ItemHeight", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0, OnItemHeightChanged));
+            DependencyProperty.RegisterAttached("ItemHeight", typeof(double), typeof(AdaptiveGridView), new PropertyMetadata(0d, OnItemHeightChanged));
 
         private static void OnItemHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -256,6 +253,9 @@ namespace ProCalendar.UI.Controls
             {
                 proCalendarToggleButton.Selected -= OnSelected;
                 proCalendarToggleButton.Selected += OnSelected;
+
+                proCalendarToggleButton.Unselected -= OnSelected;
+                proCalendarToggleButton.Unselected += OnSelected;
 
                 void OnSelected(object sender, RoutedEventArgs e) =>
                     SelectionChanged?.Invoke(sender, null);

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+
+using ProCalendar.UI.Controls.ControlsExtensions;
 
 namespace ProCalendar.UI.Controls
 {
@@ -269,12 +272,18 @@ namespace ProCalendar.UI.Controls
             this.DaysOfWeekContent = this.GetTemplateChild(childName) as AdaptiveGridView;
             if (this.DaysOfWeekContent == null) return;
 
-            this.DaysOfWeekContent.Items = new ListDates<ProCalendarToggleButton>().ContentDays;
+            var contentDays = new List<ContentControl>
+            {
+                new ContentControl().GetDefaultStyle("Пн"),
+                new ContentControl().GetDefaultStyle("Вт"),
+                new ContentControl().GetDefaultStyle("Ср"),
+                new ContentControl().GetDefaultStyle("Чт"),
+                new ContentControl().GetDefaultStyle("Пт"),
+                new ContentControl().GetDefaultStyle("Сб"),
+                new ContentControl().GetDefaultStyle("Вс"),
+            };
 
-            foreach (var item in this.DaysOfWeekContent.Items)
-                item.Content = item.DateTime.ToString("ddd");
-
-            //this.DaysOfWeekContent.ItemsSource = new ListDates().ContentDays;
+            this.DaysOfWeekContent.Items = contentDays;
         }
 
         private void UpdateContentTemplateRoot(string childName)
@@ -282,21 +291,21 @@ namespace ProCalendar.UI.Controls
             this.ContentTemplateRoot = this.GetTemplateChild(childName) as Selector;
             if (ContentTemplateRoot == null) return;
 
-            //this.ContentTemplateRoot.ItemsSource = new ProListDates().ListDates;
+            this.ContentTemplateRoot.Items.Clear();
 
-            var items = new ProListDates().ListDates;
-
-            for (int i = 0; i < items.Count; i++)
+            var listDates = new ProListDates().ListDates;
+            foreach (var item in listDates)
             {
-                AdaptiveGridView adaptiveGridView = new AdaptiveGridView
+                var adaptiveGridView = new AdaptiveGridView
                 {
+                    Width = 252,
                     ItemWidth = 36,
                     ItemHeight = 36,
                     RowsCount = 6,
                     ColumnsCount = 7,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Items = items[i].ContentDays
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Items = item.ContentDays
                 };
 
                 this.ContentTemplateRoot.Items.Add(adaptiveGridView);
@@ -336,6 +345,7 @@ namespace ProCalendar.UI.Controls
             else
                 LoadSelectedChildren(i => i.IsToday);
         }
+
         private void OnLoadingUpdateChildren()
         {
             if (this.ContentTemplateRoot.ItemsPanelRoot == null) return;
@@ -481,11 +491,16 @@ namespace ProCalendar.UI.Controls
         private void OnSelectedChangedUpdateEvents()
         {
             if (this.SelectedItem.IsSelected)
+            {
                 SelectionChanged?.Invoke(this.SelectedItem, null);
+                Debug.WriteLine("Selected: " + this.SelectedItem.DateTime);
+            }
             else
             {
+                UnselectionChanged?.Invoke(this.SelectedItem, null);
+                Debug.WriteLine("Unselected: " + this.SelectedItem.DateTime);
+
                 this.SelectedItem = null;
-                UnselectionChanged?.Invoke(null, null);
             }
         }
 

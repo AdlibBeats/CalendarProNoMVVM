@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\AdaptiveGridView.cs" />
+    <Compile Include="Controls\ControlsExtensions\ContentControlsExtension.cs" />
     <Compile Include="Controls\ProCalendarToggleButton.cs" />
     <Compile Include="Controls\ProCalendarView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

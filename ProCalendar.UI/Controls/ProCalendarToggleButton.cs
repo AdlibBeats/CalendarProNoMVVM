@@ -132,7 +132,7 @@ namespace ProCalendar.UI.Controls
 
         private void UpdateDateTime()
         {
-            this.Content = this.DateTime.ToString("dd");
+            this.Content = this.DateTime.Day;
         }
 
         #endregion
