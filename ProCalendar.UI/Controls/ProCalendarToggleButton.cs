@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Input;
 
 namespace ProCalendar.UI.Controls
 {
-    public class ProCalendarToggleButton : ContentControl
+    public sealed class ProCalendarToggleButton : ContentControl
     {
         #region Public Events
 
@@ -20,7 +20,6 @@ namespace ProCalendar.UI.Controls
         #endregion
 
         #region Public Cotr
-
         public ProCalendarToggleButton()
         {
             this.DefaultStyleKey = typeof(ProCalendarToggleButton);
@@ -35,11 +34,9 @@ namespace ProCalendar.UI.Controls
             this.PointerEntered += OnPointerEntered;
             this.PointerExited += OnPointerExited;
         }
-
         #endregion
 
         #region Protected OnApplyTemplate
-
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -54,11 +51,9 @@ namespace ProCalendar.UI.Controls
             UpdateIsToday();
             UpdateIsWeekend();
         }
-
         #endregion
 
         #region Private Handlers
-
         private void OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, this.IsSelected ? "CheckedPressed" : "Pressed", true);
@@ -85,11 +80,9 @@ namespace ProCalendar.UI.Controls
         {
             VisualStateManager.GoToState(this, this.IsSelected ? "CheckedNormal" : "Normal", true);
         }
-
         #endregion
 
         #region Public Equals
-
         public bool Equals(DateTime dateTime) =>
             this.DateTime.Year == dateTime.Year &&
             this.DateTime.Month == dateTime.Month &&
@@ -98,7 +91,6 @@ namespace ProCalendar.UI.Controls
         #endregion
 
         #region Private Updating Methods
-
         private void UpdateIsSelected()
         {
             this.IsEnabled = true;
@@ -134,11 +126,9 @@ namespace ProCalendar.UI.Controls
         {
             this.Content = this.DateTime.Day;
         }
-
         #endregion
 
         #region Public Dependency Properties
-
         public bool IsSelected
         {
             get { return (bool)GetValue(IsSelectedProperty); }
@@ -231,16 +221,15 @@ namespace ProCalendar.UI.Controls
         }
 
         public static readonly DependencyProperty DateTimeProperty =
-            DependencyProperty.Register("DateTime", typeof(DateTime), typeof(ProCalendarToggleButton), new PropertyMetadata(DateTime.Now, lol));
+            DependencyProperty.Register("DateTime", typeof(DateTime), typeof(ProCalendarToggleButton), new PropertyMetadata(DateTime.Now, OnDateTimeChanged));
 
-        private static void lol(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDateTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var proCalendarToggleButton = d as ProCalendarToggleButton;
             if (proCalendarToggleButton == null) return;
 
             proCalendarToggleButton.UpdateDateTime();
         }
-
         #endregion
     }
 }

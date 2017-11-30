@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace ProCalendar.UI.Controls
 {
-    public class ProCalendarPicker : Control
+    public sealed class ProCalendarPicker : Control
     {
         private Button _loadingButton;
         private ProgressRing _loadingProgress;

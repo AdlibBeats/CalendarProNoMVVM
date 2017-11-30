@@ -21,7 +21,7 @@ namespace ProCalendar.UI.Controls
         Extended
     }
 
-    public class ProCalendarView : Control
+    public sealed class ProCalendarView : Control
     {
         public event RoutedEventHandler SelectionChanged;
         public event RoutedEventHandler UnselectionChanged;

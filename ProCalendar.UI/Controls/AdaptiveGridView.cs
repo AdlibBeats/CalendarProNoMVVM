@@ -11,20 +11,29 @@ using Windows.UI.Xaml.Media;
 
 namespace ProCalendar.UI.Controls
 {
-    public class AdaptiveGridView : Control, IEnumerable<FrameworkElement>
+    public sealed class AdaptiveGridView : Control, IEnumerable<FrameworkElement>
     {
+        #region Public Events
+
         public event RoutedEventHandler SelectionChanged;
+
+        #endregion
+
+        #region Private Fields 
 
         private int _currentColumn = 0;
         private int _currentRow = 0;
-        
+
+        #endregion
+
+        #region Public Cotr
         public AdaptiveGridView()
         {
             this.DefaultStyleKey = typeof(AdaptiveGridView);
-
-            this.Width = 252;
         }
+        #endregion
 
+        #region Protected OnApplyTemplate
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -37,7 +46,9 @@ namespace ProCalendar.UI.Controls
             UpdateItemWidth();
             UpdateItemHeigh();
         }
+        #endregion
 
+        #region Private Updating Methods
         private void UpdateColumnsCount()
         {
             if (this.ItemsPanelRoot == null) return;
@@ -85,7 +96,9 @@ namespace ProCalendar.UI.Controls
             foreach (FrameworkElement child in this.ItemsPanelRoot.Children)
                 child.Height = this.ItemHeight;
         }
+        #endregion
 
+        #region Public Dependency Properties
         public IEnumerable<FrameworkElement> Items
         {
             get { return (IEnumerable<FrameworkElement>)GetValue(ItemsProperty); }
@@ -179,7 +192,9 @@ namespace ProCalendar.UI.Controls
 
             adaptiveGridView.UpdateItemHeigh();
         }
+        #endregion
 
+        #region Public IList Methods & Properties
         public IEnumerator<FrameworkElement> GetEnumerator()
         {
             if (this.ItemsPanelRoot?.Children == null) yield return null;
@@ -305,5 +320,6 @@ namespace ProCalendar.UI.Controls
 
             return this.ItemsPanelRoot.Children.Remove(item);
         }
+        #endregion
     }
 }
