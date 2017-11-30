@@ -11,6 +11,8 @@
         <Style.Setters>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Width" Value="252.5"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="Template">
@@ -18,10 +20,11 @@
                     <ControlTemplate TargetType="local:ProCalendarPicker">
                         <Grid
                             x:Name="Root"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            Width="{TemplateBinding Width}"
-                            Height="{TemplateBinding Height}">
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
                             <FlyoutBase.AttachedFlyout>
                                 <Flyout Placement="Bottom" x:Name="RootFlyout">
                                     <Flyout.FlyoutPresenterStyle>
@@ -49,6 +52,7 @@
                             <Button
                                 x:Name="LoadingButton"
                                 Style="{StaticResource CalendarDatePickerButton}"
+                                Background="{TemplateBinding Background}"
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
                                 <Button.Content>
@@ -71,6 +75,7 @@
                                             Foreground="Black"/>
                                         <TextBlock
                                             x:Name="DateText"
+                                            Foreground="{TemplateBinding Foreground}"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                             Margin="5,0"
