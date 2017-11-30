@@ -33,6 +33,9 @@ namespace ProCalendar.UI.Controls
             _rootFlyout = this.GetTemplateChild("RootFlyout") as Flyout;
             if (_rootFlyout == null) return;
 
+            _rootFlyout.Opened -= OnOpened;
+            _rootFlyout.Opened += OnOpened;
+
             _flyoutBorder = this.GetTemplateChild("FlyoutBorder") as Grid;
             if (_flyoutBorder == null) return;
 
@@ -54,19 +57,22 @@ namespace ProCalendar.UI.Controls
             _proCalendarView.UnselectionChanged += ProCalendar_UnselectionChanged;
         }
 
-        private async void loadingButton_Tapped(object sender, RoutedEventArgs e)
+        private void loadingButton_Tapped(object sender, RoutedEventArgs e)
         {
             _calendarIcon.Visibility = Visibility.Collapsed;
             _loadingProgress.IsActive = true;
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     _rootFlyout.ShowAt(_flyoutBorder);
                 });
             });
+        }
 
+        private void OnOpened(object sender, object e)
+        {
             _loadingProgress.IsActive = false;
             _calendarIcon.Visibility = Visibility.Visible;
         }
