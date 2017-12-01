@@ -13,10 +13,10 @@ namespace ProCalendar.UI.Controls.ControlsExtensions
         public static ContentControl GetDefaultStyle(this ContentControl value, string content = null) => new ContentControl
         {
             Content = content,
-            FontSize = 14,
+            FontSize = 16,
             VerticalAlignment = VerticalAlignment.Center,
             HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalContentAlignment = VerticalAlignment.Bottom,
+            VerticalContentAlignment = VerticalAlignment.Center,
             HorizontalContentAlignment = HorizontalAlignment.Center
         };
     }
