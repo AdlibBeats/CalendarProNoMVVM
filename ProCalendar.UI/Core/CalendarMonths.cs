@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace ProCalendar.UI.Core
 {
-    public enum ProListDatesLoadingType
+    public enum CalendarMonthsLoadingType
     {
         LoadingYears,
         LoadingMonths,
         LoadingDays
     }
 
-    public sealed class ProListDates
+    public sealed class CalendarMonths
     {
         public DateTime Min { get; set; }
         public DateTime Max { get; set; }
-        public ProListDatesLoadingType ProListDatesLoadingType { get; set; }
-        public ProListDates() : this(DateTime.Now, DateTime.Now.AddMonths(3), ProListDatesLoadingType.LoadingMonths, DateTime.Now.AddDays(3), DateTime.Now.AddDays(12))
+        public CalendarMonthsLoadingType ProListDatesLoadingType { get; set; }
+        public CalendarMonths() : this(DateTime.Now, DateTime.Now.AddMonths(3), CalendarMonthsLoadingType.LoadingMonths, DateTime.Now.AddDays(3), DateTime.Now.AddDays(12))
         {
 
         }
 
-        public ProListDates(DateTime min, DateTime max, ProListDatesLoadingType proListDatesLoadingType, params DateTime[] blackoutDays)
+        public CalendarMonths(DateTime min, DateTime max, CalendarMonthsLoadingType proListDatesLoadingType, params DateTime[] blackoutDays)
         {
             this.BlackoutDays = blackoutDays;
             this.ProListDatesLoadingType = proListDatesLoadingType;
@@ -37,21 +37,21 @@ namespace ProCalendar.UI.Core
 
         private void Initialize()
         {
-            this.ListDates = new List<ListDates<ProCalendarToggleButton>>();
+            this.Months = new List<CalendarDays<ProCalendarToggleButton>>();
 
             switch (this.ProListDatesLoadingType)
             {
-                case ProListDatesLoadingType.LoadingYears:
+                case CalendarMonthsLoadingType.LoadingYears:
                     {
                         LoadYears();
                         break;
                     }
-                case ProListDatesLoadingType.LoadingMonths:
+                case CalendarMonthsLoadingType.LoadingMonths:
                     {
                         LoadMonths();
                         break;
                     }
-                case ProListDatesLoadingType.LoadingDays:
+                case CalendarMonthsLoadingType.LoadingDays:
                     {
                         LoadDays();
                         break;
@@ -77,7 +77,7 @@ namespace ProCalendar.UI.Core
                         IsToday = false
                     };
 
-                    this.ListDates.Add(new ListDates<ProCalendarToggleButton>(dateTimeModel));
+                    this.Months.Add(new CalendarDays<ProCalendarToggleButton>(dateTimeModel));
                 }
                 i = i.AddYears(1);
             }
@@ -99,7 +99,7 @@ namespace ProCalendar.UI.Core
                     IsToday = false
                 };
 
-                this.ListDates.Add(new ListDates<ProCalendarToggleButton>(dateTimeModel, this.BlackoutDays.ToArray()));
+                this.Months.Add(new CalendarDays<ProCalendarToggleButton>(dateTimeModel, this.BlackoutDays.ToArray()));
                 i = i.AddMonths(1);
             }
         }
@@ -111,6 +111,6 @@ namespace ProCalendar.UI.Core
 
         public IEnumerable<DateTime> BlackoutDays { get; set; }
 
-        public IList<ListDates<ProCalendarToggleButton>> ListDates { get; set; }
+        public IList<CalendarDays<ProCalendarToggleButton>> Months { get; set; }
     }
 }

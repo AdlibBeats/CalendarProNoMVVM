@@ -68,7 +68,7 @@ namespace ProCalendar.UI.Controls
 
             this.ContentTemplateRoot.Items.Clear();
 
-            var listDates = new ProListDates().ListDates;
+            var listDates = new CalendarMonths().Months;
             foreach (var item in listDates)
             {
                 var adaptiveGridView = new AdaptiveGridView
@@ -77,7 +77,7 @@ namespace ProCalendar.UI.Controls
                     ColumnsCount = 7,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch,
-                    Items = item.ContentDays
+                    Items = item.Days
                 };
 
                 this.ContentTemplateRoot.Items.Add(adaptiveGridView);
@@ -145,22 +145,6 @@ namespace ProCalendar.UI.Controls
                 _contentTemplateRoot_CurrentIndex =
                     this.ContentTemplateRoot.SelectedIndex;
             }
-        }
-
-        private Panel GetItemsPanelRootFromIndex(int index)
-        {
-            if (this.ContentTemplateRoot.ItemsPanelRoot == null) return null;
-
-            var selectorItem = this.ContentTemplateRoot.ItemsPanelRoot.Children.ElementAtOrDefault(index) as SelectorItem;
-            if (selectorItem == null) return null;
-
-            var adaptiveGridView = selectorItem.ContentTemplateRoot as AdaptiveGridView;
-            if (adaptiveGridView == null) return null;
-
-            var itemsPanelRoot = adaptiveGridView.ItemsPanelRoot as Panel;
-            if (itemsPanelRoot == null) return null;
-
-            return itemsPanelRoot;
         }
 
         private void OnScrollingUpdateChildren()
@@ -288,12 +272,12 @@ namespace ProCalendar.UI.Controls
                     var proCalendarToggleButton = itemsPanelRoot.Children.ElementAtOrDefault(j) as ProCalendarToggleButton;
                     if (proCalendarToggleButton == null) continue;
 
-                    ChangeSelectedMode(i, proCalendarToggleButton);
+                    UpdateFromSelectionMode(i, proCalendarToggleButton);
                 }
             }
         }
 
-        private void ChangeSelectedMode(int index, ProCalendarToggleButton proCalendarToggleButton)
+        private void UpdateFromSelectionMode(int index, ProCalendarToggleButton proCalendarToggleButton)
         {
             switch (this.SelectionMode)
             {
@@ -341,6 +325,22 @@ namespace ProCalendar.UI.Controls
         private void UpdateExtendedMode(int index, ProCalendarToggleButton proCalendarToggleButton)
         {
             //TODO: UpdateExtendedMode();
+        }
+
+        private Panel GetItemsPanelRootFromIndex(int index)
+        {
+            if (this.ContentTemplateRoot.ItemsPanelRoot == null) return null;
+
+            var selectorItem = this.ContentTemplateRoot.ItemsPanelRoot.Children.ElementAtOrDefault(index) as SelectorItem;
+            if (selectorItem == null) return null;
+
+            var adaptiveGridView = selectorItem.ContentTemplateRoot as AdaptiveGridView;
+            if (adaptiveGridView == null) return null;
+
+            var itemsPanelRoot = adaptiveGridView.ItemsPanelRoot as Panel;
+            if (itemsPanelRoot == null) return null;
+
+            return itemsPanelRoot;
         }
 
         public Selector ContentTemplateRoot

@@ -111,9 +111,9 @@
     <Compile Include="Controls\ProCalendarPicker.cs" />
     <Compile Include="Controls\ProCalendarToggleButton.cs" />
     <Compile Include="Controls\ProCalendarView.cs" />
-    <Compile Include="Core\BaseListDates.cs" />
-    <Compile Include="Core\ListDates.cs" />
-    <Compile Include="Core\ProListDates.cs" />
+    <Compile Include="Core\Base\BaseCalendarDays.cs" />
+    <Compile Include="Core\CalendarDays.cs" />
+    <Compile Include="Core\CalendarMonths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueConverters\DateTimeConverter.cs" />
     <EmbeddedResource Include="Properties\ProCalendar.UI.rd.xml" />

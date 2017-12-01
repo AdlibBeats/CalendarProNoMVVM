@@ -1,4 +1,5 @@
 ﻿using ProCalendar.UI.Controls;
+using ProCalendar.UI.Core.Base;
 
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace ProCalendar.UI.Core
 {
-    public sealed class ListDates<T> : BaseListDates<T> where T : ProCalendarToggleButton, new()
+    public sealed class CalendarDays<T> : BaseCalendarDays<T> where T : ProCalendarToggleButton, new()
     {
         public int ContentDaysCapacity
         {
             get => 42;
         }
 
-        public ListDates() : this(new T()) { }
+        public CalendarDays() : this(new T()) { }
 
-        public ListDates(T dateTimeModel, params DateTime[] blackoutDays) : base(dateTimeModel, blackoutDays)
+        public CalendarDays(T dateTimeModel, params DateTime[] blackoutDays) : base(dateTimeModel, blackoutDays)
         {
             this.Initialize();
         }
@@ -25,7 +26,7 @@ namespace ProCalendar.UI.Core
         private void Initialize()
         {
             int count = 0;
-            this.ContentDays = new List<T>();
+            this.Days = new List<T>();
 
             int dayOfWeek = (int)this.CurrentDay.DateTime.DayOfWeek;
 
@@ -33,10 +34,10 @@ namespace ProCalendar.UI.Core
             if (count != 0)
                 AddRemainingDates(count, this.CurrentDay.DateTime.AddDays(-count));
 
-            foreach (var dateTimeModel in this.CurrentDays)
-                this.ContentDays.Add(dateTimeModel);
+            foreach (var dateTimeModel in this.BaseDays)
+                this.Days.Add(dateTimeModel);
 
-            count = this.ContentDaysCapacity - this.ContentDays.Count;
+            count = this.ContentDaysCapacity - this.Days.Count;
             AddRemainingDates(count, this.CurrentDay.DateTime.AddMonths(1));
         }
 
@@ -54,11 +55,11 @@ namespace ProCalendar.UI.Core
                     IsToday = this.GetIsToday(remainingDateTime)
                 };
 
-                this.ContentDays.Add(dateTimeModel);
+                this.Days.Add(dateTimeModel);
                 remainingDateTime = remainingDateTime.AddDays(1);
             }
         }
 
-        public IList<T> ContentDays { get; set; }
+        public IList<T> Days { get; set; }
     }
 }

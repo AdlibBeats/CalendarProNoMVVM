@@ -253,29 +253,6 @@ namespace ProCalendar.UI.Controls
             }
         }
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                if (this.ItemsPanelRoot?.Children == null)
-                    return false;
-                else
-                    return this.ItemsPanelRoot.Children.IsReadOnly;
-            }
-        }
-
-        public FrameworkElement this[int index]
-        {
-            get => this.ItemsPanelRoot?.Children?.ElementAtOrDefault(index) as FrameworkElement;
-            set
-            {
-                var frameworkElement =
-                    this.ItemsPanelRoot?.Children?.ElementAtOrDefault(index) as FrameworkElement;
-
-                frameworkElement = value;
-            }
-        }
-
         public int IndexOf(FrameworkElement item)
         {
             if (item == null) return -1;

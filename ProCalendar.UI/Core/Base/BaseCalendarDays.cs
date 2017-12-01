@@ -1,16 +1,15 @@
 ﻿using ProCalendar.UI.Controls;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProCalendar.UI.Core
+namespace ProCalendar.UI.Core.Base
 {
-    public class BaseListDates<T> where T : ProCalendarToggleButton, new()
+    public abstract class BaseCalendarDays<T> where T : ProCalendarToggleButton, new()
     {
-        public BaseListDates(T currentDay, params DateTime[] blackoutDays)
+        public BaseCalendarDays(T currentDay, params DateTime[] blackoutDays)
         {
             this.CurrentDay = currentDay;
 
@@ -22,7 +21,7 @@ namespace ProCalendar.UI.Core
 
         private void Initialize()
         {
-            this.CurrentDays = new List<T>();
+            this.BaseDays = new List<T>();
 
             int countDays = DateTime.DaysInMonth(CurrentDay.DateTime.Year, CurrentDay.DateTime.Month);
             for (int day = 1; day <= countDays; day++)
@@ -39,7 +38,7 @@ namespace ProCalendar.UI.Core
                     IsToday = this.GetIsToday(dateTime)
                 };
 
-                this.CurrentDays.Add(dateTimeModel);
+                this.BaseDays.Add(dateTimeModel);
             }
         }
 
@@ -68,6 +67,6 @@ namespace ProCalendar.UI.Core
 
         public T CurrentDay { get; set; }
 
-        public IList<T> CurrentDays { get; set; }
+        public IList<T> BaseDays { get; set; }
     }
 }
