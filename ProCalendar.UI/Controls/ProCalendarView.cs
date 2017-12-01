@@ -390,10 +390,7 @@ namespace ProCalendar.UI.Controls
 
         private static void OnSelectionModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var proCalendarView = d as ProCalendarView;
-            if (proCalendarView == null) return;
-
-            //TODO: UpdateSelectionMode(newValue);
+            
         }
     }
 }
