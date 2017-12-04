@@ -47,6 +47,8 @@ namespace ProCalendar.UI.Controls
             this.DaysOfWeekContent = this.GetTemplateChild(childName) as AdaptiveGridView;
             if (this.DaysOfWeekContent == null) return;
 
+            this.DaysOfWeekContent.Clear();
+
             var contentDays = new List<ContentControl>
             {
                 new ContentControl().GetDefaultStyle("Пн"),
