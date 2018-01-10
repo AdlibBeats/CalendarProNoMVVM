@@ -180,23 +180,16 @@ namespace ProCalendar.UI.Controls
 
             if (currentProCalendarToggleButton == null) return;
 
-            if (proCalendarToggleButton.IsSelected && proCalendarToggleButton.IsToday)
+            if (proCalendarToggleButton.IsToday)
             {
-                currentProCalendarToggleButton.IsSelected = true;
-                proCalendarToggleButton.IsSelected = false;
+                currentProCalendarToggleButton.IsToday = true;
+                proCalendarToggleButton.IsToday = false;
+            }
 
-                currentProCalendarToggleButton.IsToday = true;
-                proCalendarToggleButton.IsToday = false;
-            }
-            else if (proCalendarToggleButton.IsSelected)
+            if (proCalendarToggleButton.IsSelected)
             {
                 currentProCalendarToggleButton.IsSelected = true;
                 proCalendarToggleButton.IsSelected = false;
-            }
-            else if (proCalendarToggleButton.IsToday)
-            {
-                currentProCalendarToggleButton.IsToday = true;
-                proCalendarToggleButton.IsToday = false;
             }
             else if (proCalendarToggleButton.IsDisabled)
             {
