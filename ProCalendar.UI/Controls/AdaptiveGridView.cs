@@ -247,7 +247,7 @@ namespace ProCalendar.UI.Controls
             get
             {
                 if (this.ItemsPanelRoot?.Children == null)
-                    return -1;
+                    return 0;
                 else
                     return this.ItemsPanelRoot.Children.Count;
             }
